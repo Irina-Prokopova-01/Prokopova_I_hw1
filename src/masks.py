@@ -12,3 +12,4 @@ def get_mask_account(bank_account: str) -> str | None:
         return f"**{bank_account[-4::]}"
     else:
         return None
+
