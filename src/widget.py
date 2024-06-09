@@ -13,10 +13,8 @@ def mask_account_card(card: str) -> str | None:
     return f"{name} {number}"
 
 
-
-
-
-
-
+def get_data(date: str) -> str:
+    """Функция преобразования даты"""
+    return f'{date[8:10]}.{date[5:7]}.{date[0:4]}'
 
 
