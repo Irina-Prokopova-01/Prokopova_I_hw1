@@ -12,6 +12,8 @@ def mask_account_card(card: str) -> str | None:
         number = get_mask_card_number(number)
     return f"{name} {number}"
 
+print(mask_account_card('Maestro 1596837868705199'))
+
 
 def get_data(date: str) -> str:
     """Функция преобразования даты"""
