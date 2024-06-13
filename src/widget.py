@@ -13,7 +13,7 @@ def mask_account_card(card: str) -> str:
     return f"{name} {number}"
 
 
-print(mask_account_card("Maestro 1596837868705199"))
+# print(mask_account_card("Maestro 1596837868705199"))
 
 
 def get_data(date: str) -> str:
