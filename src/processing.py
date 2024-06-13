@@ -1,19 +1,13 @@
-from typing import Iterable
-
-
-def filter_by_state(dict_1: Iterable[list[dict]], state='EXECUTED') -> Iterable[list[dict]]:
-    """Функция сортирующая словари по ключу state"""
+def filter_by_state(data_list: list[dict], state: str="EXECUTED") -> list[dict]:
+    """Функция фильтрующая словари по ключу state"""
     filter_dict = []
-    for i in dict_1:
-        if i.get('state') == state:
-            filter_dict.append(i)
+    for item in data_list:
+        if item.get("state") == state:
+            filter_dict.append(item)
     return filter_dict
 
 
-def sort_by_date(dict_1: Iterable[list[dict]], ascending=True) -> Iterable[list[dict]]:
-    """Функция сортирующая словари по убыванию даты"""
-    sorted_date_list = sorted(dict_1, key=lambda x: x['date'], reverse=ascending)
+def sort_by_date(data_list: list[dict], ascending: bool=False) -> list[dict]:
+    """Функция сортирующая словари по дате"""
+    sorted_date_list = sorted(data_list, key=lambda x: x["date"], reverse=ascending)
     return sorted_date_list
-
-
-
