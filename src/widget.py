@@ -1,7 +1,9 @@
 from src.masks import get_mask_card_number, get_mask_account
 
+# from typing import Optional
 
-def mask_account_card(card: str) -> str | None:
+
+def mask_account_card(card: str) -> str:
     """Функция возвращает строку с замаскированным счетом или номером карты"""
     cards = card.split()
     number = cards[-1]
