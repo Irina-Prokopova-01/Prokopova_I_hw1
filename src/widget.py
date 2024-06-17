@@ -9,10 +9,10 @@ def mask_account_card(card: str) -> str:
     number = cards[-1]
     name = " ".join(cards[:-1])
     if name == "Счет":
-        number = get_mask_account(number)
+        number_mask = get_mask_account(number)
     else:
-        number = get_mask_card_number(number)
-    return f"{name} {number}"
+        number_mask = get_mask_card_number(number)
+    return f"{name} {number_mask}"
 
 
 # print(mask_account_card("Maestro 1596837868705199"))
