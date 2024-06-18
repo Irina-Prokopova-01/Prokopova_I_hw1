@@ -10,7 +10,7 @@ def test_get_mask_card_number():
 
 def test_get_mask_card_number_TypeError():
     with pytest.raises(TypeError):
-        get_mask_card_number(565)
+        get_mask_card_number(678)
 
 
 def test_get_mask_account():
@@ -20,5 +20,5 @@ def test_get_mask_account():
 
 def test_get_mask_account_TypeError():
     with pytest.raises(TypeError):
-        get_mask_account(587)
+        get_mask_account(596)
 
