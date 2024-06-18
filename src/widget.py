@@ -1,21 +1,18 @@
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 # from typing import Optional
 
 
 def mask_account_card(card: str) -> str:
     """Функция возвращает строку с замаскированным счетом или номером карты"""
-    if card is None:
-        return "None"
+    cards = card.split()
+    number = cards[-1]
+    name = " ".join(cards[:-1])
+    if name == "Счет":
+        number_mask = get_mask_account(number)
     else:
-        cards = card.split()
-        number = cards[-1]
-        name = " ".join(cards[:-1])
-        if name == "Счет":
-            number = get_mask_account(number)
-        else:
-            number = get_mask_card_number(number)
-    return f"{name} {number}"
+        number_mask = get_mask_card_number(number)
+    return f"{name} {number_mask}"
 
 
 # print(mask_account_card("Maestro 1596837868705199"))
