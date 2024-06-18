@@ -1,5 +1,5 @@
 def get_mask_card_number(card_number: str) -> str | None:
-    if type(card_number) is str:
+    if type(card_number) != str:
         raise TypeError
     """Функция маскирующая номер карты"""
     if card_number.isdigit() and len(card_number) == 16:
@@ -11,7 +11,7 @@ def get_mask_card_number(card_number: str) -> str | None:
 
 
 def get_mask_account(bank_account: str) -> str | None:
-    if type(bank_account) is str:
+    if type(bank_account) != str:
         raise TypeError
     """Функция маскирующая номер счета"""
     if bank_account.isdigit() and len(bank_account) == 20:
