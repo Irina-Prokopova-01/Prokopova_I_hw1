@@ -1,4 +1,4 @@
-# from collections.abc import Iterator
+from typing import Generator, TypeVar
 
 
 transactions = [
@@ -50,7 +50,7 @@ transactions = [
 ]
 
 
-def filter_by_currency(transactions: list[dict], currency: str) -> list[dict]:
+def filter_by_currency(transactions: list[dict], currency: str) -> Generator[int, None, None]:
     """Функция возвращает операции в которых указана валюта"""
     # transaction = [transaction[id] for transaction in transactions if currency == transaction["operationAmount"]["currency"]["code"]]
     # yield transaction
@@ -67,7 +67,7 @@ def filter_by_currency(transactions: list[dict], currency: str) -> list[dict]:
 # print(next(filter_by_currency(transactions, 'USD')))
 
 
-def transaction_descriptions(transactions: list[dict]) -> GeneratorExit:
+def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, None]:
     """Функция возвращает действия над счетами"""
     for transaction in transactions:
         yield transaction["description"]
@@ -77,7 +77,7 @@ def transaction_descriptions(transactions: list[dict]) -> GeneratorExit:
 #     print(transaction)
 #
 
-def card_number_generator(start: int, end: int) -> int:
+def card_number_generator(start: int, end: int) -> Generator[str, None, None]:
     for number in range(start, end):
         card_number = str(number)
         while len(card_number) < 16:
