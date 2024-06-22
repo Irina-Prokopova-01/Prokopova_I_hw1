@@ -22,4 +22,4 @@ def test_get_mask_account() -> None:
 
 def test_get_mask_account_TypeError() -> None:
     with pytest.raises(TypeError):
-        get_mask_account(596)
+        get_mask_account(596)  # type: ignore

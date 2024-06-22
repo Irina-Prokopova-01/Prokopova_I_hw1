@@ -49,7 +49,7 @@ transactions = [
 ]
 
 
-def filter_by_currency(transactions: list[dict], currency: str) -> Generator[int, None, None]:
+def filter_by_currency(transactions: list[dict], currency: str) -> Generator[dict, None, None]:
     """Функция возвращает операции в которых указана валюта"""
     # transaction = [transaction[id] for transaction in transactions if currency == transaction["operationAmount"]["currency"]["code"]]
     # yield transaction
@@ -86,6 +86,6 @@ def card_number_generator(start: int, end: int) -> Generator[str, None, None]:
         yield formatted_card_number
 
 
-# card_nam = card_number_generator(0, 99999999999999999999)
-# for card_number_generator in range(3):
-#     print(next(card_nam))
+card_nam = card_number_generator(0, 99999999999999999999)
+for card_number_generator in range(3):
+    print(next(card_nam))
