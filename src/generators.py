@@ -1,6 +1,5 @@
 from typing import Generator, TypeVar
 
-
 transactions = [
     {
         "id": 939719570,
@@ -57,12 +56,12 @@ def filter_by_currency(transactions: list[dict], currency: str) -> Generator[int
 
     for transaction in transactions:
         if currency == transaction["operationAmount"]["currency"]["code"]:
-            yield transaction["id"]
+            yield transaction
 
 #
-# for transaction in filter_by_currency(transactions, "USD"):
-#     print(transaction)
-#
+for transaction in filter_by_currency(transactions, "USD"):
+    print(transaction)
+
 
 # print(next(filter_by_currency(transactions, 'USD')))
 
@@ -78,6 +77,7 @@ def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, N
 #
 
 def card_number_generator(start: int, end: int) -> Generator[str, None, None]:
+    """Функция генерирующая номера карт в заданном диапазоне"""
     for number in range(start, end):
         card_number = str(number)
         while len(card_number) < 16:

@@ -1,6 +1,6 @@
 import pytest
 
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def test_get_mask_card_number() -> None:
@@ -11,7 +11,7 @@ def test_get_mask_card_number() -> None:
 
 def test_get_mask_card_number_TypeError() -> None:
     with pytest.raises(TypeError):
-        get_mask_card_number(678)
+        get_mask_card_number(678)  # type: ignore
 
 
 def test_get_mask_account() -> None:
