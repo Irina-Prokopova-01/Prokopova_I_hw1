@@ -71,10 +71,10 @@ def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, N
     for transaction in transactions:
         yield transaction["description"]
 
-#
+
 # for transaction in transaction_descriptions(transactions):
 #     print(transaction)
-#
+
 
 def card_number_generator(start: int, end: int) -> Generator[str, None, None]:
     """Функция генерирующая номера карт в заданном диапазоне"""
