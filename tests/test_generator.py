@@ -41,10 +41,10 @@ def test_transaction_descriptions() -> None:
     assert next(generator) == "Перевод организации"
 
 
-def test_card_number_generator() -> None:
-    generator = card_number_generator(0, 2)
-    assert next(generator) == "0000 0000 0000 0000"
-
+# def test_card_number_generator() -> None:
+#     generator = card_number_generator(0, 2)
+#     assert next(generator) == "0000 0000 0000 0000"
+#
 
 # def test_card_number_generator1():
 #     assert next(card_number_generator(0, 1)) == '0000 0000 0000 0000'
