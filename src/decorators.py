@@ -4,6 +4,8 @@ import sys
 
 
 def log(filename: str | None = None) -> Callable:
+    """Декоратор логирует вызов функции и
+    ее результат в файл или в консоль"""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
