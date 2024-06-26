@@ -1,20 +1,8 @@
-import pytest
-from src.decorators import log, my_function
-
-# def test_log(capsys):
-#     with pytest.raises(Exception):
-#         captured = capsys.readouterr()
-#         assert captured.out == f"my_function error: {e}. Inputs:{args}, {kwargs}\n"
-
-def test_log():
-    with pytest.raises(Exception, match='my_function error: {e}. Inputs:{args}, {kwargs}'):
-        my_function()
+from src.decorators import my_function
 
 
-def test_my_function():
-    @my_function
-    def add_numbers(x, y):
-        return x + y
-
-    result = add_numbers(3, 5)
-    assert result == 8
+def test_log_decorator_success(capsys):
+    result = my_function(1, 2)
+    assert result == 3
+    captured = capsys.readouterr()
+    assert "my_function ok" in captured.err
