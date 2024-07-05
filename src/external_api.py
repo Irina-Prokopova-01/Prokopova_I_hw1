@@ -7,9 +7,9 @@ load_dotenv('.env')
 def amount_transaction(transaction: dict) -> float | None:
     """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях, тип данных — float"""
     amount = float(transaction["operationAmount"]["amount"])
-    currency = transaction["operationAmount"]["amount"]["currency"]["code"]
+    currency = transaction["operationAmount"]["currency"]["code"]
     if currency == "RUB":
-        return (float(amount))
+        return amount
     if currency != "RUB":
         API_KEY = os.getenv("API_KEY")
         url = f'https://api.apilayer.com/exchangerates_data/convert'
@@ -18,11 +18,13 @@ def amount_transaction(transaction: dict) -> float | None:
             data = response.json()
             if 'result' in data:
                 amount = data['result']
-                return float(amount)
-            else:
-                raise ValueError(f'Exchange rate for {currency} not found in API response')
+                return amount
 
-    return float(amount)
+    raise ValueError(f'Exchange rate for {currency} not found in API response')
+
+
+
+
 
 transaction = {
     "id": 441945886,
