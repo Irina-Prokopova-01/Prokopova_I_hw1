@@ -14,20 +14,27 @@
 │ ├── masks.py
 │ ├── processing.py
 │ ├── widget.py
-│ └── generators.py
+│ ├── generators.py
+│ ├── utils.py
+│ └── external_api.py
+
 ├── tests
 │ ├── test_decorators.py
 │ ├── test_masks.py
 │ ├── test_processing.py
 │ ├── test_widget.py
-│ └── test_generators.py
-
+│ ├── test_generators.py
+│ ├── test_unit.py
+│ └── test_external_api.py
 
 * src/masks.py модуль отвечающий за кодировку счета/карты 
 * src/widget.py модуль отвечающий за преобразования даты
 * src/processing.py модуль отвечающий за фильтрацию словарей по дате/ключу
 * src/generator.py модуль для генерации различных данных, используемых в виджете.
 * src/decorators.py модуль, содержащий декоратор log для логирования вызовов функций и результатов их работы.
+* src/utils.py модуль для получения список словарей с данными о финансовых транзакциях.
+* src/external_api.py модуль который возвращает сумму транзакции в рублях.
+
 
 ## Установка:
    ```
@@ -68,5 +75,8 @@ poetry install
 ## Документация
 
 ## Лицензия
+
+## Конфиденциальные данные
+Конфиденциальные данные должны находиться в файле .env. Пример данных для работы хранятся в файле .env_example
 
 
