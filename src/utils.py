@@ -1,32 +1,24 @@
 import json
 import os.path
 
-# import requests
-
 
 def get_transactions_json_file(path: str) -> list[dict]:
     """Функция которая принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях"""
     if not os.path.exists(path):
-        print("Путь до файла не найдет")
+        # print("Путь до файла не найден")
         return []
     try:
         with open(path, "r", encoding="utf-8") as f:
             try:
                 json_file_transactions = json.load(f)
+                if isinstance(json_file_transactions, list):
+                    return json_file_transactions
+                else:
+                    # print("Ошибка: Файл не содержит список транзакций")
+                    return []
             except json.JSONDecodeError:
-                print("Ошибка декодирования")
-                return []
-            if isinstance(json_file_transactions, list):
-                return json_file_transactions
-            else:
-                print("Обьект не принадлежит к классу list")
+                # print("Ошибка декодирования JSON")
                 return []
     except FileNotFoundError:
-        print("Файл не найден")
+        # print("Файл не найден")
         return []
-
-
-if __name__ == "__main__":
-    path = "../data/operations.json"
-    a = get_transactions_json_file(path)
-    print(a)

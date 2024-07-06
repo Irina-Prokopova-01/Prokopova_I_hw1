@@ -1,30 +1,30 @@
-import pytest
-from unittest.mock import Mock
+import json
 from unittest.mock import patch
-from src.external_api import amount_transaction
 
-@pytest.fixture
-def data() -> list[dict]:
-    return {
-    "id": 441945886,
-    "state": "EXECUTED",
-    "date": "2019-08-26T10:50:58.294041",
-    "operationAmount": {
-        "amount": "31957.58",
-        "currency": {
-                        "name": "руб.",
-                        "code": "RUB"
-                    }
-    }
-}
+from src.utils import get_transactions_json_file
 
+@patch("os.path.exists")
+@patch("builtins.open")
+def test_get_transactions_json_file(mock_open, mock_path_exists):
+    mock_file = mock_open.return_value.__enter__.return_value
 
+    # Проверка на удачный результат.
+    mock_path_exists.return_value = True
+    mock_file.read.return_value = json.dumps([{"test": "test"}])
+    assert get_transactions_json_file("test.json") == [{"test": "test"}]
 
-@pytest.mark.parametrize("expected", [(31957.58)])
-def test_amount_transaction_RUB(data, expected):
-    assert amount_transaction(data) == expected
+    # Проверка на ошибку типа файла.
+    mock_file.read.return_value = json.dumps({})
+    assert get_transactions_json_file("test.json") == []
 
+    # Проверка на некорректный файл.
+    mock_file.read.return_value = json.dumps("testtest")
+    assert get_transactions_json_file("test.json") == []
 
-@patch(path)
-def test_amount_transaction_path(mock_amount):
-    mock_amount.return_value =
+    # Проверка на пустой файл.
+    mock_file.read.return_value = ""
+    assert get_transactions_json_file("test.json") == []
+
+    # Проверка на путь, который не существует.
+    mock_path_exists.return_value = False
+    assert get_transactions_json_file("test.json") == []
