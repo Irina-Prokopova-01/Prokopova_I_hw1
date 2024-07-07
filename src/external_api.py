@@ -42,4 +42,3 @@ transaction = {
 }
 
 print(amount_transaction(transaction))
-
