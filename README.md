@@ -53,6 +53,9 @@ poetry install
 В проекте не используются внешние библиотеки, только встроенные, 
 поэтому ничего устанавливать дополнительно не нужно. 
 
+## Получение API ключа для конвертации валют
+Exchange Rates Data API: https://apilayer.com/exchangerates_data-api
+
 ## Примеры использования кода:
 
 ```def mask_account_card(card: str) -> str:

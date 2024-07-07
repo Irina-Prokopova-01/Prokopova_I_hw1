@@ -1,4 +1,4 @@
-from typing import Generator, TypeVar
+from typing import Generator
 
 transactions = [
     {
@@ -51,12 +51,11 @@ transactions = [
 
 def filter_by_currency(transactions: list[dict], currency: str) -> Generator[dict, None, None]:
     """Функция возвращает операции в которых указана валюта"""
-    # transaction = [transaction[id] for transaction in transactions if currency == transaction["operationAmount"]["currency"]["code"]]
-    # yield transaction
 
     for transaction in transactions:
         if currency == transaction["operationAmount"]["currency"]["code"]:
             yield transaction
+
 
 #
 for transaction in filter_by_currency(transactions, "USD"):

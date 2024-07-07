@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 from src.utils import get_transactions_json_file
 
+
 @patch("os.path.exists")
 @patch("builtins.open")
 def test_get_transactions_json_file(mock_open, mock_path_exists):

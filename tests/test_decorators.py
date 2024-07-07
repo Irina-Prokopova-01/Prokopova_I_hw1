@@ -1,4 +1,5 @@
 from src.decorators import my_function
+
 # import os
 
 
@@ -7,6 +8,8 @@ def test_log_decorator_success(capsys):
     assert result == 3
     captured = capsys.readouterr()
     assert "my_function ok" in captured.err
+
+
 #
 
 # def test_log_decorator_file_output():

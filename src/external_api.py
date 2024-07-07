@@ -1,4 +1,5 @@
 import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -6,7 +7,7 @@ load_dotenv(".env")
 
 
 def amount_transaction(transaction: dict) -> float | None:
-    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях, тип данных — float"""
+    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции в рублях, тип данных — float"""
     amount = float(transaction["operationAmount"]["amount"])
     currency = transaction["operationAmount"]["currency"]["code"]
     if currency == "RUB":
@@ -22,15 +23,23 @@ def amount_transaction(transaction: dict) -> float | None:
             if "result" in data:
                 amount = data["result"]
                 return amount
-
+    print(response.status_code)
     raise ValueError(f"Exchange rate for {currency} not found in API response")
 
 
+# transaction = {
+#     "id": 441945886,
+#     "state": "EXECUTED",
+#     "date": "2019-08-26T10:50:58.294041",
+#     "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+# }
+
 transaction = {
-    "id": 441945886,
+    "id": 41428829,
     "state": "EXECUTED",
-    "date": "2019-08-26T10:50:58.294041",
-    "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+    "date": "2019-07-03T18:35:29.512364",
+    "operationAmount": {"amount": "8221", "currency": {"name": "USD", "code": "USD"}},
 }
 
 print(amount_transaction(transaction))
+
