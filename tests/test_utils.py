@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch
 
-from src.utils import get_transactions_json_file
+from src.utils import get_transactions_json_file, amount_transaction
 
 
 @patch("os.path.exists")
@@ -32,3 +32,28 @@ def test_get_transactions_json_file_uncorrect_path():
 
 def test_get_transactions_json_file_str():
     assert get_transactions_json_file("") == []
+
+
+@patch("src.utils.convert_to_rubles")
+def test_rubles(mock_convert):
+    transaction = {
+        "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+    }
+
+    res = amount_transaction(transaction)
+
+    assert res == 31957.58
+    mock_convert.assert_not_called()
+
+
+@patch("src.utils.convert_to_rubles")
+def test_bar(mock_convert):
+    mock_convert.return_value = 123.45
+    transaction = {
+        "operationAmount": {"amount": "31957.58", "currency": {"name": "$", "code": "USD"}},
+    }
+
+    res = amount_transaction(transaction)
+
+    assert res == 123.45
+    mock_convert.assert_called_once_with("USD", 31957.58)
