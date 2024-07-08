@@ -15,7 +15,7 @@ def mask_account_card(card: str) -> str:
     return f"{name} {number_mask}"
 
 
-# print(mask_account_card("Maestro 1596837868705199"))
+
 
 
 def get_data(date: str) -> str:
