@@ -17,5 +17,3 @@ def convert_to_rubles(currency: str, amount: float) -> float:
 
     data = response.json()
     return round(data["result"], 2)
-
-

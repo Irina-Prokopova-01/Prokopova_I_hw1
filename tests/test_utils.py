@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch
 
-from src.utils import get_transactions_json_file, amount_transaction
+from src.utils import amount_transaction, get_transactions_json_file
 
 
 @patch("os.path.exists")

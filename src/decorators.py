@@ -32,5 +32,3 @@ def log(filename: str | None = None) -> Callable:
 @log(filename="mylog.txt")
 def my_function(x: int, y: int) -> int:
     return x + y
-
-

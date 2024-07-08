@@ -34,5 +34,3 @@ def amount_transaction(transaction: dict) -> float:
     if currency.upper() != "RUB":
         amount = convert_to_rubles(currency, amount)
     return amount
-
-
