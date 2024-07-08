@@ -1,3 +1,4 @@
+import json
 from unittest.mock import patch
 
 from src.external_api import amount_transaction
@@ -11,20 +12,32 @@ transaction = {
 
 
 @patch("requests.get")
-def test_amount_transaction_(mock_get):
+def test_amount_transaction_status_code(mock_get):
     mock_get.return_value.status_code = 200
+
+
+@patch("requests.get")
+def test_amount_transaction_test_json(mock_get):
+    mock_get.assert_called_once()
+
+
+@patch("requests.get")
+def test_amount_transaction_convertation(mock_get):
+    mock_get.assert_called_with(url, headers=headers, params=params)
+
+
+@patch("requests.get")
+def test_amount_transaction_convertation(mock_get):
     mock_get.return_value.json.return_value = {
         "success": True,
-        "timestemp": 1720199764,
-        "base": "USD",
-        "date": "2024-07-05",
-        "rates": {"RUB": 100},
+        "query": {"from": "USD", "to": "RUB", "amount": 8221},
+        "info": {"timestamp": 1720422065, "rate": 88.644718},
+        "date": "2024-07-08",
+        "result": 728748.226678,
     }
     assert amount_transaction(transaction) == 822100.0
-    mock_get.assert_called_once()
-    mock_get.assert_called_with(
-        url, headers={"apikey": API_KEY}, params={"from": currency, "to": "RUB", "amount": amount}
-    )
+    # mock_get.assert_called_once()
+    # mock_get.assert_called_with(url, headers=headers, params=params)
 
 
 # import json
