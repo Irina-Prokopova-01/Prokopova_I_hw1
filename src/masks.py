@@ -7,7 +7,7 @@ def get_mask_card_number(card_number: str) -> str | None:
     return None
 
 
-# print(get_mask_card_number('7000792289606361'))
+
 
 
 def get_mask_account(bank_account: str) -> str | None:
