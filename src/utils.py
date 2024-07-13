@@ -14,8 +14,8 @@ logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
 
 
-def get_transactions_json_file(path: str) -> list[dict]:
-    """ Функция, которая принимает на вход путь до JSON-файла,
+def get_transactions_json_csv_xlsx_file(path: str) -> list[dict]:
+    """ Функция, которая принимает на вход путь до файла с расширением JSON, csv или xlsx и
     возвращает список словарей с данными о фин. транзакциях."""
     if not os.path.exists(path):
         logger.warning(f"Проверте корректность указанного пути {path}.")
@@ -46,7 +46,7 @@ def get_transactions_json_file(path: str) -> list[dict]:
 
 
 if __name__ == "__main__":
-    # transactions = get_transactions_json_file("../data/operations.json")
+    # transactions = get_transactions_json_csv_xlsx_file("../data/operations.json")
     # if transactions:
     #     print("Список транзакций:")
     #     for transaction in transactions:
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     # else:
     #     print("Файл не найден, пустой или содержит некорректный формат.")
 
-    transactions_csv = get_transactions_json_file("../data/transactions.csv")
+    transactions_csv = get_transactions_json_csv_xlsx_file("../data/transactions.csv")
     if transactions_csv:
         print("Список транзакций из CSV-файла:")
         for transaction in transactions_csv:
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     else:
         print("Ошибка при чтении CSV-файла.")
 
-# transactions_excel = get_transactions_json_file("../data/transactions_excel.xlsx")
+# transactions_excel = get_transactions_json_csv_xlsx_file("../data/transactions_excel.xlsx")
 # if transactions_excel:
 #     print("\nСписок транзакций из XLSX-файла:")
 #     for transaction in transactions_excel:
