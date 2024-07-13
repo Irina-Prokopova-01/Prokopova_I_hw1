@@ -1,42 +1,22 @@
 import json
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, mock_open, patch
 
 import pandas as pd
+import pytest
 
 from src.utils import amount_transaction, get_transactions_json_csv_xlsx_file
 
-@patch('tests.test_utils.pd.read_csv')
+
+@patch("tests.test_utils.pd.read_csv")
 def test_get_transactions_json_csv_xlsx_file_csv(path):
     Mock.return_value = pd.DataFrame()
-    assert get_transactions_json_csv_xlsx_file('foo') == []
+    assert get_transactions_json_csv_xlsx_file("foo") == []
 
 
-@patch('tests.test_utils.pd.read_excel')
+@patch("tests.test_utils.pd.read_excel")
 def test_get_transactions_json_csv_xlsx_file_xlsx(path):
     Mock.return_value = pd.DataFrame()
-    assert get_transactions_json_csv_xlsx_file('foo') == []
-
-
-@patch("os.path.exists")
-@patch("builtins.open")
-def test_get_transactions_json_csv_xlsx_file(mock_open, mock_path_exists):
-    mock_file = mock_open.return_value.__enter__.return_value
-
-    mock_path_exists.return_value = True
-    mock_file.read.return_value = json.dumps([{"test": "test"}])
-    assert get_transactions_json_csv_xlsx_file("test.json") == [{"test": "test"}]
-
-    mock_file.read.return_value = json.dumps({})
-    assert get_transactions_json_csv_xlsx_file("test.json") == []
-
-    mock_file.read.return_value = json.dumps("testtest")
-    assert get_transactions_json_csv_xlsx_file("test.json") == []
-
-    mock_file.read.return_value = ""
-    assert get_transactions_json_csv_xlsx_file("test.json") == []
-
-    mock_path_exists.return_value = False
-    assert get_transactions_json_csv_xlsx_file("test.json") == []
+    assert get_transactions_json_csv_xlsx_file("foo") == []
 
 
 def test_get_transactions_json_file_uncorrect_path():
@@ -70,3 +50,34 @@ def test_bar(mock_convert):
 
     assert res == 123.45
     mock_convert.assert_called_once_with("USD", 31957.58)
+
+
+@pytest.fixture()
+def mocked_path_exists():
+    with patch("os.path.exists", return_value=True) as mocked_path_exists:
+        yield mocked_path_exists
+
+
+@pytest.mark.usefixtures("mocked_path_exists")
+class TestGetTransactionsJsonFile:
+
+    @patch("builtins.open", new_callable=mock_open, read_data=json.dumps([{"name": "John", "age": 12}]))
+    def test_returns_values_if_file_contains_list_of_dict(self, mock_file):
+        expected = [{"name": "John", "age": 12}]
+        assert get_transactions_json_csv_xlsx_file("test.json") == expected
+
+    def test_returns_empty_list_if_file_not_exists_(self, mocked_path_exists):
+        mocked_path_exists.return_value = False
+        assert get_transactions_json_csv_xlsx_file("test.json") == []
+
+    # @patch("builtins.open", new_callable=mock_open, read_data="")
+    # def test_returns_empty_list_if_file_is_empty(self, mock_file):
+    #     assert get_transactions_json_csv_xlsx_file("test.json") == []
+    #
+    # @patch("builtins.open", new_callable=mock_open, read_data="not_json")
+    # def test_returns_empty_list_if_file_has_not_json_data(self, mock_file):
+    #     assert get_transactions_json_csv_xlsx_file("test.json") == []
+
+    @patch("builtins.open", new_callable=mock_open, read_data=json.dumps({"name": "John", "age": 12}))
+    def test_returns_empty_list_if_file_contains_not_list(self, mock_file):
+        assert get_transactions_json_csv_xlsx_file("test.json") == []

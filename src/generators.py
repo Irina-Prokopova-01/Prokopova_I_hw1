@@ -62,17 +62,10 @@ for transaction in filter_by_currency(transactions, "USD"):
     print(transaction)
 
 
-# print(next(filter_by_currency(transactions, 'USD')))
-
-
 def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, None]:
     """Функция возвращает действия над счетами"""
     for transaction in transactions:
         yield transaction["description"]
-
-
-# for transaction in transaction_descriptions(transactions):
-#     print(transaction)
 
 
 def card_number_generator(start: int, end: int) -> Generator[str, None, None]:

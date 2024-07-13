@@ -15,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 
 
 def get_transactions_json_csv_xlsx_file(path: str) -> list[dict]:
-    """ Функция, которая принимает на вход путь до файла с расширением JSON, csv или xlsx и
+    """Функция, которая принимает на вход путь до файла с расширением JSON, csv или xlsx и
     возвращает список словарей с данными о фин. транзакциях."""
     if not os.path.exists(path):
         logger.warning(f"Проверте корректность указанного пути {path}.")
