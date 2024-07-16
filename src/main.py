@@ -73,7 +73,7 @@ def main() -> None:
         date_sorted_transactions = sort_by_date(transaction_data_list, direction)
     elif users_choise_date_sort == "нет":
         date_sorted_transactions = filtred_transaction_data
-    # Фильтрация по рублёвым транзакциям
+    # Фильтрация по рублёвым транзакция
 
     while True:
         print("Выводить только рублёвые транзакции?")
