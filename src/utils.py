@@ -13,7 +13,16 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
 
+def remove_empty_dicts(func):
+    """
+    Декоратор, который удаляет из списка, возвращаемого декорируемой функцией, все пустые словари.
+    """
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return [item for item in result if item]
+    return wrapper
 
+@remove_empty_dicts
 def get_transactions_json_csv_xlsx_file(path: str) -> list[dict]:
     """Функция, которая принимает на вход путь до файла с расширением JSON, csv или xlsx и
     возвращает список словарей с данными о фин. транзакциях."""
@@ -43,6 +52,7 @@ def get_transactions_json_csv_xlsx_file(path: str) -> list[dict]:
         xlsx_file_transactions = pd.read_excel("../data/transactions_excel.xlsx")
         logger.info(f"Файл {xlsx_file_transactions} прочитан.")
         return xlsx_file_transactions.to_dict(orient="records")
+
 
 
 if __name__ == "__main__":

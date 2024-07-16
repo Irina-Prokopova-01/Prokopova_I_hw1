@@ -1,29 +1,31 @@
-# Импортирование необходимых для программы функций из разработанных модулей
-from src.utils import get_transactions_json_csv_xlsx_file
+
+# РРјРїРѕСЂС‚РёСЂРѕРІР°РЅРёРµ РЅРµРѕР±С…РѕРґРёРјС‹С… РґР»СЏ РїСЂРѕРіСЂР°РјРјС‹ С„СѓРЅРєС†РёР№ РёР· СЂР°Р·СЂР°Р±РѕС‚Р°РЅРЅС‹С… РјРѕРґСѓР»РµР№
 from src.processing import filter_by_state, sort_by_date
 from src.searching_str_in_transaction import searching_str_in_transacnions
+from src.utils import get_transactions_json_csv_xlsx_file
 from src.widget import mask_account_card, get_data
 
+
 def main() -> None:
-    """Функция, определяющая работу с конечным пользователем разработанной программы.
-    Задаёт вопросы и в соответствии с полученными ответами работает с разработанными модулями."""
+    """Р¤СѓРЅРєС†РёСЏ, РѕС‚РІРµС‡Р°РµС‚ Р·Р° РѕСЃРЅРѕРІРЅСѓСЋ Р»РѕРіРёРєСѓ РїСЂРѕРµРєС‚Р° Рё СЂР°Р±РѕС‚Сѓ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РІ
+    С„РѕСЂРјР°С‚Рµ РІРѕРїСЂРѕСЃ/РѕС‚РІРµС‚."""
     print(
-        """Добро пожаловать в программу работы с банковскими транзакциями!
-    Выберите пункт меню:
-    1. Получить информацию о транзакциях из JSON-файла;
-    2. Получить информацию о транзакциях из CSV-файла;
-    3. Получить информацию о транзакциях из XLSX-файла."""
+        """РџСЂРёРІРµС‚! Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РїСЂРѕРіСЂР°РјРјСѓ СЂР°Р±РѕС‚С‹ СЃ Р±Р°РЅРєРѕРІСЃРєРёРјРё С‚СЂР°РЅР·Р°РєС†РёСЏРјРё.
+    Р’С‹Р±РµСЂРёС‚Рµ РЅРµРѕР±С…РѕРґРёРјС‹Р№ РїСѓРЅРєС‚ РјРµРЅСЋ:
+    1. РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚СЂР°РЅР·Р°РєС†РёСЏС… РёР· JSON-С„Р°Р№Р»Р°
+    2. РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚СЂР°РЅР·Р°РєС†РёСЏС… РёР· CSV-С„Р°Р№Р»Р°
+    3. РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚СЂР°РЅР·Р°РєС†РёСЏС… РёР· XLSX-С„Р°Р№Р»Р°"""
     )
     while True:
-        users_menu_choise = input("Введите номер пункта в меню: ")
+        users_menu_choise = input("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РїСѓРЅРєС‚Р° РІ РјРµРЅСЋ: ")
         if users_menu_choise in ("1", "2", "3"):
             break
         else:
-            print('Введён некорректный ответ. Введите "1", "2" или "3"')
+            print('Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. Р’РІРµРґРёС‚Рµ "1", "2" РёР»Рё "3"')
     menu = {
-        "1": "Для обработки выбран JSON-файл.",
-        "2": "Для обработки выбран CSV-файл.",
-        "3": "Для обработки выбран XLSX-файл.",
+        "1": "Р”Р»СЏ РѕР±СЂР°Р±РѕС‚РєРё РІС‹Р±СЂР°РЅ JSON-С„Р°Р№Р»",
+        "2": "Р”Р»СЏ РѕР±СЂР°Р±РѕС‚РєРё РІС‹Р±СЂР°РЅ CSV-С„Р°Р№Р»",
+        "3": "Р”Р»СЏ РѕР±СЂР°Р±РѕС‚РєРё РІС‹Р±СЂР°РЅ XLSX-С„Р°Р№Р»",
     }
     print(f"{menu[users_menu_choise]}")
     if users_menu_choise == "1":
@@ -32,103 +34,107 @@ def main() -> None:
         transaction_data_list = get_transactions_json_csv_xlsx_file("../data/transactions.csv")
     elif users_menu_choise == "3":
         transaction_data_list = get_transactions_json_csv_xlsx_file("../data/transactions_excel.xlsx")
-    # Фильтрация по статусу
+    # Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ СЃС‚Р°С‚СѓСЃСѓ
     while True:
         print(
-            """Введите статус, по которому необходимо выполнить фильтрацию:  EXECUTED, CANCELED, PENDING"""
+            """Р’РІРµРґРёС‚Рµ СЃС‚Р°С‚СѓСЃ РёРЅС‚РµСЂРµСЃСѓСЋС‰РµР№ РІР°СЃ РѕРїСЂРµР°С†РёРё:  EXECUTED, CANCELED, PENDING"""
         )
-        users_status = input("Введите выбранный статус: ").upper()
+        users_status = input("Р’РІРµРґРёС‚Рµ РІС‹Р±СЂР°РЅРЅС‹Р№ СЃС‚Р°С‚СѓСЃ: ").upper()
         if users_status in ["EXECUTED", "CANCELED", "PENDING"]:
             break
         else:
-            print("Введён некорректный ответ. Введите "EXECUTED", "CANCELED" или "PENDING"")
+            print('Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. Р’РІРµРґРёС‚Рµ "EXECUTED", "CANCELED" РёР»Рё "PENDING"')
+
     filtred_transaction_data = filter_by_state(transaction_data_list, users_status)
-    print(f"Операции отфильтрованы по статусу {users_status}.")
-    # Фильтрация по дате
+    print(f"РћРїРµСЂР°С†РёРё РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅС‹ РїРѕ СЃС‚Р°С‚СѓСЃСѓ {users_status}.")
+    # Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ РґР°С‚Рµ
 
     while True:
-        print("Отфильтровать операции по дате?")
-        users_choise_date_sort = input("Введите да/нет сюда: ").lower()
-        if users_choise_date_sort in ("да", "нет"):
+        print("РћС‚С„РёР»СЊС‚СЂРѕРІР°С‚СЊ РѕРїРµСЂР°С†РёРё РїРѕ РґР°С‚Рµ?")
+        users_choise_date_sort = input("Р’РІРµРґРёС‚Рµ РґР°/РЅРµС‚: ").lower()
+        if users_choise_date_sort in ("РґР°", "РЅРµС‚"):
             break
         else:
-            print("Введён некорректный ответ. Повторите ввод ответа.")
-    if users_choise_date_sort == "да":
+            print("Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ РѕС‚РІРµС‚Р°.")
+    if users_choise_date_sort == "РґР°":
 
         while True:
-            print("Отфильтровать по возрастанию или убыванию?")
-            users_choise_sort_direction = input("Введите по возрастанию/по убыванию сюда: ").lower()
-            if users_choise_sort_direction in ("по возрастанию", "по убыванию"):
+            print("РћС‚С„РёР»СЊС‚СЂРѕРІР°С‚СЊ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ РёР»Рё СѓР±С‹РІР°РЅРёСЋ?")
+            users_choise_sort_direction = input("Р’РІРµРґРёС‚Рµ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ/РїРѕ СѓР±С‹РІР°РЅРёСЋ СЃСЋРґР°: ").lower()
+            if users_choise_sort_direction in ("РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ", "РїРѕ СѓР±С‹РІР°РЅРёСЋ"):
                 break
-            print('Введён некорректный ответ. Введите "по возрастанию" или "по убыванию"')
-        if users_choise_sort_direction == "по возрастанию":
+            else:
+                print('Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. Р’РІРµРґРёС‚Рµ "РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ" РёР»Рё "РїРѕ СѓР±С‹РІР°РЅРёСЋ"')
+        if users_choise_sort_direction == "РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ":
             direction = False
-        elif users_choise_sort_direction == "по убыванию":
+        elif users_choise_sort_direction == "РїРѕ СѓР±С‹РІР°РЅРёСЋ":
             direction = True
+        # print(transaction_data_list)
         date_sorted_transactions = sort_by_date(transaction_data_list, direction)
-    elif users_choise_date_sort == "нет":
+    elif users_choise_date_sort == "РЅРµС‚":
         date_sorted_transactions = filtred_transaction_data
-    # Фильтрация по рублёвым транзакциям
+    # Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ СЂСѓР±Р»С‘РІС‹Рј С‚СЂР°РЅР·Р°РєС†РёСЏРј
 
     while True:
-        print("Выводить только рублёвые транзакции?")
-        users_choise_rub = input("Введите да/нет: ").lower()
-        if users_choise_rub in ("да", "нет"):
+        print("Р’С‹РІРѕРґРёС‚СЊ С‚РѕР»СЊРєРѕ СЂСѓР±Р»С‘РІС‹Рµ С‚СЂР°РЅР·Р°РєС†РёРё?")
+        users_choise_rub = input("Р’РІРµРґРёС‚Рµ РґР°/РЅРµС‚: ").lower()
+        if users_choise_rub in ("РґР°", "РЅРµС‚"):
             break
         else:
-            print('Введён некорректный ответ. Введите "да" или "нет"')
-    if users_choise_rub == "да":
+            print('Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. Р’РІРµРґРёС‚Рµ "РґР°" РёР»Рё "РЅРµС‚"')
+    if users_choise_rub == "РґР°":
+        print(date_sorted_transactions)
         rub_transactions = [
-            transaction for transaction in date_sorted_transactions if transaction["currency_code"] == "RUB"
+            (print(transaction), transaction)[1] for transaction in date_sorted_transactions if transaction['operationAmount']["currency"]["code"] == "RUB"
         ]
-    elif users_choise_rub == "нет":
+    elif users_choise_rub == "РЅРµС‚":
         rub_transactions = date_sorted_transactions
-    # Фильтрация по определённому слову в описании
+    # Р¤РёР»СЊС‚СЂР°С†РёСЏ РїРѕ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРјСѓ СЃР»РѕРІСѓ РІ РѕРїРёСЃР°РЅРёРё
 
     while True:
-        print("Отфильтровать список по определённому слову в описании?")
-        users_choise_description = input("Введите да/нет сюда: ").lower()
-        if users_choise_description in ("да", "нет"):
+        print("РћС‚С„РёР»СЊС‚СЂРѕРІР°С‚СЊ СЃРїРёСЃРѕРє РїРѕ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРјСѓ СЃР»РѕРІСѓ РІ РѕРїРёСЃР°РЅРёРё?")
+        users_choise_description = input("Р’РІРµРґРёС‚Рµ РґР°/РЅРµС‚ СЃСЋРґР°: ").lower()
+        if users_choise_description in ("РґР°", "РЅРµС‚"):
             break
         else:
-            print('Введён некорректный ответ. Введите "да" или "нет"')
-    if users_choise_description == "да":
-        users_word_to_filter = input("Введите слово для сортировки: ").lower()
+            print('Р’РІРµРґС‘РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚. Р’РІРµРґРёС‚Рµ "РґР°" РёР»Рё "РЅРµС‚"')
+    if users_choise_description == "РґР°":
+        users_word_to_filter = input("Р’РІРµРґРёС‚Рµ СЃР»РѕРІРѕ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё: ").lower()
         sorted_by_description = searching_str_in_transacnions(rub_transactions, users_word_to_filter)
         result_transactions = sorted_by_description
-    elif users_choise_description == "нет":
+    elif users_choise_description == "РЅРµС‚":
         result_transactions = rub_transactions
-    # Работа с итоговым списком
+    # Р Р°Р±РѕС‚Р° СЃ РёС‚РѕРіРѕРІС‹Рј СЃРїРёСЃРєРѕРј
     count_of_transactions = len(result_transactions)
-    # Вывод результатов, если список не пустой
+    # Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ, РµСЃР»Рё СЃРїРёСЃРѕРє РЅРµ РїСѓСЃС‚РѕР№
     if count_of_transactions > 0:
-        print("Распечатываю итоговый список транзакций...\n")
-        print(f"Всего банковских операций в выборке {count_of_transactions}.\n")
+        print("Р Р°СЃРїРµС‡Р°С‚С‹РІР°СЋ РёС‚РѕРіРѕРІС‹Р№ СЃРїРёСЃРѕРє С‚СЂР°РЅР·Р°РєС†РёР№...\n")
+        print(f"Р’СЃРµРіРѕ Р±Р°РЅРєРѕРІСЃРєРёС… РѕРїРµСЂР°С†РёР№ РІ РІС‹Р±РѕСЂРєРµ {count_of_transactions}.\n")
         for item in result_transactions:
-            if item["description"] == "Открытие вклада":
+            if item["description"] == "РћС‚РєСЂС‹С‚РёРµ РІРєР»Р°РґР°":
                 date_str = get_data(item["date"])
                 descr_str = item["description"]
-                summa_str = item["amount"]
-                currency_str = item["currency_code"]
+                summa_str = item["operationAmount"]["amount"]
+                currency_str = item["operationAmount"]["currency"]["code"]
                 print(
                     f"""{date_str} {descr_str}
-Сумма: {summa_str} {currency_str}\n"""
+РЎСѓРјРјР°: {summa_str} {currency_str}\n"""
                 )
             else:
                 date_str = get_data(item["date"])
                 descr_str = item["description"]
                 from_str = mask_account_card(item["from"])
                 to_str = mask_account_card(item["to"])
-                summa_str = item["amount"]
-                currency_str = item["currency_code"]
+                summa_str = item["operationAmount"]["amount"]
+                currency_str = item["operationAmount"]["currency"]["code"]
                 print(
                     f"""{date_str} {descr_str}
 {from_str} -> {to_str}
-Сумма: {summa_str} {currency_str}\n"""
+РЎСѓРјРјР°: {summa_str} {currency_str}\n"""
                 )
-    # Вывод результата с пустым списком
+    # Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р° СЃ РїСѓСЃС‚С‹Рј СЃРїРёСЃРєРѕРј
     else:
-        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации.")
+        print("РќРµ РЅР°Р№РґРµРЅРѕ РЅРё РѕРґРЅРѕР№ С‚СЂР°РЅР·Р°РєС†РёРё, РїРѕРґС…РѕРґСЏС‰РµР№ РїРѕРґ РІР°С€Рё СѓСЃР»РѕРІРёСЏ С„РёР»СЊС‚СЂР°С†РёРё.")
 
 
 if __name__ == "__main__":

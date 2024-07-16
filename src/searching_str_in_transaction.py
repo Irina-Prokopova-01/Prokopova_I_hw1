@@ -1,3 +1,6 @@
+
+
+
 import re
 from collections import Counter
 from typing import Dict, List
@@ -10,9 +13,9 @@ transactions = [
         "amount": 16210.0,
         "currency_name": "Sol",
         "currency_code": "PEN",
-        "from": "Счет 58803664561298323391",
-        "to": "Счет 39745660563456619397",
-        "description": "Перевод организации",
+        "from": "РЎС‡РµС‚ 58803664561298323391",
+        "to": "РЎС‡РµС‚ 39745660563456619397",
+        "description": "РџРµСЂРµРІРѕРґ РѕСЂРіР°РЅРёР·Р°С†РёРё",
     },
     {
         "id": 3598919.0,
@@ -23,7 +26,7 @@ transactions = [
         "currency_code": "COP",
         "from": "Discover 3172601889670065",
         "to": "Discover 0720428384694643",
-        "description": "Перевод с карты на карту",
+        "description": "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° РєР°СЂС‚Сѓ",
     },
     {
         "id": 650703.0,
@@ -32,9 +35,9 @@ transactions = [
         "amount": 16210.0,
         "currency_name": "Sol",
         "currency_code": "PEN",
-        "from": "Счет 58803664561298323391",
-        "to": "Счет 39745660563456619397",
-        "description": "Перевод организации",
+        "from": "РЎС‡РµС‚ 58803664561298323391",
+        "to": "РЎС‡РµС‚ 39745660563456619397",
+        "description": "РџРµСЂРµРІРѕРґ РѕСЂРіР°РЅРёР·Р°С†РёРё",
     },
     {
         "id": 3598919.0,
@@ -45,7 +48,7 @@ transactions = [
         "currency_code": "COP",
         "from": "Discover 3172601889670065",
         "to": "Discover 0720428384694643",
-        "description": "Перевод с карты на карту",
+        "description": "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° РєР°СЂС‚Сѓ",
     },
     {
         "id": 650703.0,
@@ -54,9 +57,9 @@ transactions = [
         "amount": 16210.0,
         "currency_name": "Sol",
         "currency_code": "PEN",
-        "from": "Счет 58803664561298323391",
-        "to": "Счет 39745660563456619397",
-        "description": "Перевод организации",
+        "from": "РЎС‡РµС‚ 58803664561298323391",
+        "to": "РЎС‡РµС‚ 39745660563456619397",
+        "description": "РџРµСЂРµРІРѕРґ РѕСЂРіР°РЅРёР·Р°С†РёРё",
     },
     {
         "id": 3598919.0,
@@ -67,7 +70,7 @@ transactions = [
         "currency_code": "COP",
         "from": "Discover 3172601889670065",
         "to": "Discover 0720428384694643",
-        "description": "Перевод с карты на карту",
+        "description": "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° РєР°СЂС‚Сѓ",
     },
     {
         "id": 650703.0,
@@ -76,9 +79,9 @@ transactions = [
         "amount": 16210.0,
         "currency_name": "Sol",
         "currency_code": "PEN",
-        "from": "Счет 58803664561298323391",
-        "to": "Счет 39745660563456619397",
-        "description": "Перевод организации",
+        "from": "РЎС‡РµС‚ 58803664561298323391",
+        "to": "РЎС‡РµС‚ 39745660563456619397",
+        "description": "РџРµСЂРµРІРѕРґ РѕСЂРіР°РЅРёР·Р°С†РёРё",
     },
     {
         "id": 3598919.0,
@@ -89,25 +92,30 @@ transactions = [
         "currency_code": "COP",
         "from": "Discover 3172601889670065",
         "to": "Discover 0720428384694643",
-        "description": "Перевод с карты на карту",
+        "description": "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° РєР°СЂС‚Сѓ",
     },
 ]
 
 
 def searching_str_in_transacnions(transactions: List[Dict], search_string: str) -> List[Dict]:
-    """Функция принимает список транзакций и строку поиска.
-    Возвращает список транзакций, у которых в описании есть указанное слово."""
+    """Р¤СѓРЅРєС†РёСЏ РїСЂРёРЅРёРјР°РµС‚ СЃРїРёСЃРѕРє С‚СЂР°РЅР·Р°РєС†РёР№ Рё СЃС‚СЂРѕРєСѓ РїРѕРёСЃРєР°.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє С‚СЂР°РЅР·Р°РєС†РёР№, Сѓ РєРѕС‚РѕСЂС‹С… РІ РѕРїРёСЃР°РЅРёРё РµСЃС‚СЊ СѓРєР°Р·Р°РЅРЅРѕРµ СЃР»РѕРІРѕ."""
+    search_string = search_string.lower()
     new_list = []
     for transaction in transactions:
-        if 'description' in transaction and re.findall(search_string, transaction["description"]):
+        if 'description' in transaction and re.findall(search_string, transaction["description"].lower()):
            new_list.append(transaction)
 
     return new_list
 
+    # pattern = rf"{search_string}"
+    # result_transactions_dict = [transaction for transaction in transactions if re.findall(pattern, transaction["description"], flags=re.IGNORECASE)]
+    # return result_transactions_dict
+
 
 def count_categories(transactions: List[Dict], categories: List[str]) -> Dict:
-    """Функция принимает список транзакций (словарей) и категории (список).
-    Возвращает словарь вида категория: количество операций."""
+    """Р¤СѓРЅРєС†РёСЏ РїСЂРёРЅРёРјР°РµС‚ СЃРїРёСЃРѕРє С‚СЂР°РЅР·Р°РєС†РёР№ (СЃР»РѕРІР°СЂРµР№) Рё РєР°С‚РµРіРѕСЂРёРё (СЃРїРёСЃРѕРє).
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃР»РѕРІР°СЂСЊ РІРёРґР° РєР°С‚РµРіРѕСЂРёСЏ: РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРїРµСЂР°С†РёР№."""
     category_list = []
     for transaction in transactions:
         for category in categories:
@@ -117,8 +125,23 @@ def count_categories(transactions: List[Dict], categories: List[str]) -> Dict:
     result_category_dict = Counter(category_list)
     return dict(result_category_dict)
 
+    # new = []
+    # for transaction in transactions:
+    #     if 'description' in transaction and transaction['description'] in category:
+    #         new.append(transaction['description'])
+    #
+    # return Counter(new)
+    #
 
 if __name__ == "__main__":
-    print(searching_str_in_transacnions(transactions, "карт"))
-    print()
-    print(count_categories(transactions, ["перевод с карты", "перевод Организации"]))
+    categories_operations = [
+        "РџРµСЂРµРІРѕРґ РѕСЂРіР°РЅРёР·Р°С†РёРё",
+        "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° РєР°СЂС‚Сѓ",
+        "РџРµСЂРµРІРѕРґ СЃ РєР°СЂС‚С‹ РЅР° СЃС‡РµС‚",
+        "РџРµСЂРµРІРѕРґ СЃРѕ СЃС‡РµС‚Р° РЅР° СЃС‡РµС‚",
+        "РћС‚РєСЂС‹С‚РёРµ РІРєР»Р°РґР°",
+    ]
+
+    print(count_categories(transactions, categories_operations))
+    print(searching_str_in_transacnions(transactions, "РљР°СЂС‚"))
+
