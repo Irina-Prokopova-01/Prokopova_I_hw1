@@ -1,9 +1,8 @@
-
 # Импортирование необходимых для программы функций из разработанных модулей
 from src.processing import filter_by_state, sort_by_date
 from src.searching_str_in_transaction import searching_str_in_transacnions
 from src.utils import get_transactions_json_csv_xlsx_file
-from src.widget import mask_account_card, get_data
+from src.widget import get_data, mask_account_card
 
 
 def main() -> None:
@@ -36,9 +35,7 @@ def main() -> None:
         transaction_data_list = get_transactions_json_csv_xlsx_file("../data/transactions_excel.xlsx")
     # Фильтрация по статусу
     while True:
-        print(
-            """Введите статус интересующей вас опреации:  EXECUTED, CANCELED, PENDING"""
-        )
+        print("""Введите статус интересующей вас опреации:  EXECUTED, CANCELED, PENDING""")
         users_status = input("Введите выбранный статус: ").upper()
         if users_status in ["EXECUTED", "CANCELED", "PENDING"]:
             break
@@ -83,10 +80,13 @@ def main() -> None:
         else:
             print('Введён некорректный ответ. Введите "да" или "нет"')
     if users_choise_rub == "да":
-        print(date_sorted_transactions)
+        # print(date_sorted_transactions)
         rub_transactions = [
-            (print(transaction), transaction)[1] for transaction in date_sorted_transactions if transaction['operationAmount']["currency"]["code"] == "RUB"
+            transaction
+            for transaction in date_sorted_transactions
+            if transaction["operationAmount"]["currency"]["code"] == "RUB"
         ]
+
     elif users_choise_rub == "нет":
         rub_transactions = date_sorted_transactions
     # Фильтрация по определённому слову в описании

@@ -1,6 +1,3 @@
-
-
-
 import re
 from collections import Counter
 from typing import Dict, List
@@ -103,8 +100,8 @@ def searching_str_in_transacnions(transactions: List[Dict], search_string: str) 
     search_string = search_string.lower()
     new_list = []
     for transaction in transactions:
-        if 'description' in transaction and re.findall(search_string, transaction["description"].lower()):
-           new_list.append(transaction)
+        if "description" in transaction and re.findall(search_string, transaction["description"].lower()):
+            new_list.append(transaction)
 
     return new_list
 
@@ -133,6 +130,7 @@ def count_categories(transactions: List[Dict], categories: List[str]) -> Dict:
     # return Counter(new)
     #
 
+
 if __name__ == "__main__":
     categories_operations = [
         "Перевод организации",
@@ -144,4 +142,3 @@ if __name__ == "__main__":
 
     print(count_categories(transactions, categories_operations))
     print(searching_str_in_transacnions(transactions, "Карт"))
-
