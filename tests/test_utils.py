@@ -9,13 +9,13 @@ from src.utils import amount_transaction, get_transactions_json_csv_xlsx_file
 
 @patch("tests.test_utils.pd.read_csv")
 def test_get_transactions_json_csv_xlsx_file_csv(path):
-    Mock.return_value = pd.DataFrame()
+    path.return_value = pd.DataFrame()
     assert get_transactions_json_csv_xlsx_file("foo") == []
 
 
 @patch("tests.test_utils.pd.read_excel")
 def test_get_transactions_json_csv_xlsx_file_xlsx(path):
-    Mock.return_value = pd.DataFrame()
+    path.return_value = pd.DataFrame()
     assert get_transactions_json_csv_xlsx_file("foo") == []
 
 
@@ -81,3 +81,15 @@ class TestGetTransactionsJsonFile:
     @patch("builtins.open", new_callable=mock_open, read_data=json.dumps({"name": "John", "age": 12}))
     def test_returns_empty_list_if_file_contains_not_list(self, mock_file):
         assert get_transactions_json_csv_xlsx_file("test.json") == []
+
+
+# @patch("src.utils.pd.read_csv")
+# def test_get_transactions_json_csv_xlsx_file_csv(mock_read_csv):
+#     mock_read_csv.return_value = pd.DataFrame()
+#     assert get_transactions_json_csv_xlsx_file("foo") == []
+#
+#
+# @patch("src.utils.pd.read_excel")
+# def test_get_transactions_json_csv_xlsx_file_xlsx(mock_read_excel):
+#     mock_read_excel.return_value = pd.DataFrame()
+#     assert get_transactions_json_csv_xlsx_file("foo") == []

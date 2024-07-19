@@ -1,8 +1,10 @@
 # Импортирование необходимых для программы функций из разработанных модулей
+
+# Импортирование необходимых для программы функций из разработанных модулей
 from src.processing import filter_by_state, sort_by_date
 from src.searching_str_in_transaction import searching_str_in_transacnions
 from src.utils import get_transactions_json_csv_xlsx_file
-from src.widget import get_data, mask_account_card
+from src.widget import mask_account_card, get_data
 
 
 def main() -> None:
@@ -35,7 +37,9 @@ def main() -> None:
         transaction_data_list = get_transactions_json_csv_xlsx_file("../data/transactions_excel.xlsx")
     # Фильтрация по статусу
     while True:
-        print("""Введите статус интересующей вас опреации:  EXECUTED, CANCELED, PENDING""")
+        print(
+            """Введите статус интересующей вас опреации:  EXECUTED, CANCELED, PENDING"""
+        )
         users_status = input("Введите выбранный статус: ").upper()
         if users_status in ["EXECUTED", "CANCELED", "PENDING"]:
             break
@@ -80,17 +84,13 @@ def main() -> None:
         else:
             print('Введён некорректный ответ. Введите "да" или "нет"')
     if users_choise_rub == "да":
-        # print(date_sorted_transactions)
+        print(date_sorted_transactions)
         rub_transactions = [
-            transaction
-            for transaction in date_sorted_transactions
-            if transaction["operationAmount"]["currency"]["code"] == "RUB"
+            (print(transaction), transaction)[1] for transaction in date_sorted_transactions if transaction["currency_code"] == "RUB"
         ]
-
     elif users_choise_rub == "нет":
         rub_transactions = date_sorted_transactions
     # Фильтрация по определённому слову в описании
-
     while True:
         print("Отфильтровать список по определённому слову в описании?")
         users_choise_description = input("Введите да/нет сюда: ").lower()
@@ -125,8 +125,8 @@ def main() -> None:
                 descr_str = item["description"]
                 from_str = mask_account_card(item["from"])
                 to_str = mask_account_card(item["to"])
-                summa_str = item["operationAmount"]["amount"]
-                currency_str = item["operationAmount"]["currency"]["code"]
+                summa_str = item["amount"]
+                currency_str = item["currency_code"]
                 print(
                     f"""{date_str} {descr_str}
 {from_str} -> {to_str}

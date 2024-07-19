@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+import numpy as np
+import math
 
 import pandas as pd
 
@@ -18,12 +20,22 @@ def remove_empty_dicts(func):
     """
     Декоратор, который удаляет из списка, возвращаемого декорируемой функцией, все пустые словари.
     """
-
+    # Здесь я добавил проверку на то что пустого значения нет в словарях и изменениях в словаре к одному типу сткруктры как после csv
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        return [item for item in result if item]
+        result = [item for item in result if (item and not any(isinstance(value, (int, float)) and (math.isnan(value) or np.isnan(value)) for value in item.values()))]
+        for i in range(len(result)):
+            if "operationAmount" in result[i]:
+                result[i]["currency_name"] = result[i]["operationAmount"]["currency"]["name"]
+                result[i]["currency_code"] = result[i]["operationAmount"]["currency"]["code"]
+                result[i]["amount"] = result[i]["operationAmount"]["amount"]
+                del result[i]["operationAmount"]
+        return result
+
+
 
     return wrapper
+
 
 
 @remove_empty_dicts
@@ -49,7 +61,8 @@ def get_transactions_json_csv_xlsx_file(path: str) -> list[dict]:
             logger.warning(f"Данные {json_file_transactions} не является списоком.")
             return []
     elif ".csv" in path:
-        csv_file_transactions = pd.read_csv("../data/transactions.csv")
+        csv_file_transactions = pd.read_csv("../data/transactions.csv", sep=";", header=0)
+        # csv_file_transactions = pd.read_csv("../data/transactions.csv")
         logger.info(f"Файл {csv_file_transactions} прочитан.")
         return csv_file_transactions.to_dict(orient="records")
     elif ".xlsx" in path:
